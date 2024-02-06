@@ -1,0 +1,32 @@
+.climateData {
+    min-width: 300px;
+}
+
+.temperatureInfo {
+    min-width: 250px;
+    display: inline-block;
+}
+
+.conversionButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 200px;
+}
+
+.conversionButton:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.conversionButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}

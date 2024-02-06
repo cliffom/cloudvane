@@ -1,6 +1,6 @@
 import styles from "./page.module.css";
 import React, { Suspense } from 'react';
-const ClimateInfo = React.lazy(() => import('../components/climate_info.client'));
+const ClimateInfo = React.lazy(() => import('../components/ClimateInfo/climate_info.client'));
 
 
 export default function Home() {
