@@ -11,11 +11,18 @@ export default function ClimateInfo() {
 
     // State to handle loading and error states
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     // Fetch data from the endpoint on component mount
     useEffect(() => {
-        fetch('https://cliffom.ngrok.io/climate/office')
+        const apiUrl = process.env.NEXT_PUBLIC_CLIMATE_API_URL;
+        if (typeof apiUrl === 'undefined') {
+            setError('API URL is not defined');
+            setIsLoading(false);
+            return;
+        }
+
+        fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
