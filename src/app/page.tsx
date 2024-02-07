@@ -7,10 +7,16 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div>
-        <Suspense fallback={<div>Loading...</div>}>
+        <h2>Climate Information<sup><a href="/about">?</a></sup></h2>
+        <hr />
+        <Suspense fallback={<Loading />}>
           <ClimateInfo />
         </Suspense>
       </div>
     </main>
   );
+}
+
+function Loading() {
+  return <div>Loading...</div>
 }

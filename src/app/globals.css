@@ -37,8 +37,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 48, 48, 48;
+    --background-end-rgb: 48, 48, 48;
 
     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
     --secondary-glow: linear-gradient(to bottom right,
@@ -83,12 +83,21 @@ body {
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: #bbb;
+  text-decoration: underline;
 }
 
 hr {
   margin: 5px 0 5px 0;
+  border: 1px solid #bbb;
+}
+
+sup {
+  font-size: 14px;
+}
+
+sup>a {
+  text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {

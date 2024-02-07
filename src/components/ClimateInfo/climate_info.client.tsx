@@ -71,15 +71,13 @@ export default function ClimateInfo() {
         return isCelsius ? temperature : (temperature * 9 / 5) + 32;
     };
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return Loading();
     if (error) return <div>Error: {error}</div>;
 
     const displayTemperature = convertTemperature(climateData.climate.temperature);
 
     return (
         <div className={styles.climateData}>
-            <h2>Climate Information</h2>
-            <hr />
             <h3>{climateData.sensor_info.location}</h3>
             <p className={styles.temperatureInfo}>
                 Temperature: {displayTemperature.toFixed(1)}°{isCelsius ? 'C' : 'F'}
@@ -90,4 +88,8 @@ export default function ClimateInfo() {
             </button>
         </div>
     );
+}
+
+function Loading() {
+    return <div className={styles.climateData}>Loading...</div>
 }
