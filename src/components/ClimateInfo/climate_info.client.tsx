@@ -71,8 +71,8 @@ export default function ClimateInfo() {
         return isCelsius ? temperature : (temperature * 9 / 5) + 32;
     };
 
-    if (isLoading) return Loading();
-    if (error) return <div>Error: {error}</div>;
+    if (isLoading) return Placeholder('Loading...');
+    if (error) return Placeholder(error);
 
     const displayTemperature = convertTemperature(climateData.climate.temperature);
 
@@ -90,6 +90,6 @@ export default function ClimateInfo() {
     );
 }
 
-function Loading() {
-    return <div className={styles.climateData}>Loading...</div>
+function Placeholder(message: string) {
+    return <div className={styles.climateData}>{message}</div>
 }

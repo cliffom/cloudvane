@@ -9,14 +9,9 @@ export default function Home() {
       <div>
         <h2>Climate Information<sup><a href="/about">?</a></sup></h2>
         <hr />
-        <Suspense fallback={<Loading />}>
-          <ClimateInfo />
-        </Suspense>
+        <ClimateInfo />
       </div>
     </main>
   );
 }
 
-function Loading() {
-  return <div>Loading...</div>
-}
