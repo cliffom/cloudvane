@@ -1,13 +1,9 @@
-import type { Viewport, Metadata } from "next";
+import type { Viewport } from "next";
 import { GoogleTagManager } from '@next/third-parties/google'
 import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "cloudvane.cliffom.net"
-};
 
 export const viewport: Viewport = {
   width: "device-width",
