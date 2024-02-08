@@ -1,0 +1,36 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.main>div {
+    width: 90%;
+    max-width: 900px;
+    text-align: left;
+}
+
+.profile>.date {
+    color: grey;
+}
+
+.headerImage {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+h2.subtitle {
+    margin-bottom: 15px;
+}
+
+h3.description {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+div.post p {
+    margin-bottom: 15px
+}

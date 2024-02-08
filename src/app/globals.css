@@ -83,7 +83,7 @@ body {
 }
 
 a {
-  color: #bbb;
+  color: #007BFF;
   text-decoration: underline;
 }
 
@@ -97,7 +97,6 @@ sup {
 }
 
 sup>a {
-  color: #007BFF;
   text-decoration: none;
 }
 
