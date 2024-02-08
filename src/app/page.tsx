@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 const ClimateInfo = React.lazy(() => import('../components/ClimateInfo/climate_info.client'));
 
 
-export default function Home() {
+export default function ClimateInformation() {
   return (
     <main className={styles.main}>
       <div>
@@ -14,4 +14,3 @@ export default function Home() {
     </main>
   );
 }
-
