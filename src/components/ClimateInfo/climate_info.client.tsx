@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import styles from './climate_info.module.css';
+import { sendGTMEvent } from '@next/third-parties/google'
 
 // Define a type for the climate data state
 interface ClimateData {
@@ -64,6 +65,7 @@ export default function ClimateInfo() {
         const newIsCelsius = !isCelsius;
         setIsCelsius(newIsCelsius);
         localStorage.setItem('isCelsius', String(newIsCelsius));
+        sendGTMEvent({ event: 'buttonClicked', value: 'toggleTemperatureUnit' });
     };
 
     // Function to convert temperature
