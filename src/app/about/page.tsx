@@ -9,14 +9,14 @@ interface H2Props {
 }
 
 export const metadata = {
-    title: "About the CloudVane Project"
+    title: "A Spark of Curiosity: Journey into Circuits"
 };
 
 export default function About() {
     return (
         <main className={styles.main}>
             <div className={styles.post}>
-                <h1>A Spark of Curiosity: Journey into Circuits</h1>
+                <h1>{metadata.title}</h1>
                 <hr />
                 <h3 className={styles.description}>A fun project featuring Arduino, Raspberry Pi, Python, and React+Next.js</h3>
                 <div className={styles.profile}>
