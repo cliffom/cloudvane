@@ -48,7 +48,7 @@ export default function About() {
                 <h2 className={styles.subtitle}>Project Schematic</h2>
                 <p>Coming soon!</p>
 
-                <h2 className={styles.subtitle}>What's next?</h2>
+                <h2 className={styles.subtitle}>What&apos;s next?</h2>
                 <p>My current plan involves developing smaller sensors that transmit data via Bluetooth, enabling the placement of a sensor in each room of the house for highly localized climate information. Stay tuned!</p>
 
                 <h2 className={styles.subtitle}>Hardware List</h2>
