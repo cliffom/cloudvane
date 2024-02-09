@@ -11,7 +11,9 @@ interface ClimateData {
         temperature: number;
     };
     sensor_info: {
+        error: boolean;
         location: string;
+        status: string;
     };
 }
 
@@ -19,7 +21,7 @@ export default function ClimateInfo() {
     // State to store fetched data, with an explicit type
     const [climateData, setClimateData] = useState<ClimateData>({
         climate: { humidity: 0, temperature: 0 },
-        sensor_info: { location: '' },
+        sensor_info: { error: false, location: '', status: '' },
     });
 
     // State to handle loading and error states
@@ -70,6 +72,9 @@ export default function ClimateInfo() {
 
     // Function to convert temperature
     const convertTemperature = (temperature: number): number => {
+        if (climateData.sensor_info.error)
+            return -1;
+
         return isCelsius ? temperature : (temperature * 9 / 5) + 32;
     };
 
@@ -81,9 +86,8 @@ export default function ClimateInfo() {
     return (
         <div className={styles.climateData}>
             <h3>{climateData.sensor_info.location}</h3>
-            <p className={styles.temperatureInfo}>
-                Temperature: {displayTemperature.toFixed(1)}°{isCelsius ? 'C' : 'F'}
-            </p>
+            <p>Sensor Status: {climateData.sensor_info.status}</p>
+            <p>Temperature: {displayTemperature.toFixed(1)}°{isCelsius ? 'C' : 'F'}</p>
             <p>Humidity: {climateData.climate.humidity}%</p>
             <button onClick={toggleTemperatureUnit} className={styles.conversionButton}>
                 Switch to {isCelsius ? 'Fahrenheit' : 'Celsius'}
