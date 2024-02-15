@@ -2,44 +2,35 @@
 
 import React, { useState, useEffect } from 'react';
 import styles from './climate_info.module.css';
-import { sendGTMEvent } from '@next/third-parties/google'
+import { sendGTMEvent } from '@next/third-parties/google';
 
-// Define a type for the climate data state
 interface ClimateData {
-    climate: {
-        humidity: number;
-        temperature: number;
-    };
-    sensor_info: {
-        error: boolean;
-        location: string;
-        status: string;
+    [location: string]: {
+        climate: {
+            humidity: number;
+            temperature: number;
+        };
+        sensor_info: {
+            error: boolean;
+            location: string;
+            status: string;
+        };
     };
 }
 
-export default function ClimateInfo() {
-    // State to store fetched data, with an explicit type
-    const [climateData, setClimateData] = useState<ClimateData>({
-        climate: { humidity: 0, temperature: 0 },
-        sensor_info: { error: false, location: '', status: '' },
-    });
 
-    // State to handle loading and error states
+export default function ClimateInfo() {
+    const [climateData, setClimateData] = useState<ClimateData>({});
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-
-    // State to track temperature unit, initialized to true (Celsius) by default
     const [isCelsius, setIsCelsius] = useState<boolean>(true);
 
     useEffect(() => {
-        // Attempt to load the user's temperature unit preference from localStorage
         const savedUnit = localStorage.getItem('isCelsius');
-        const unitPreference = savedUnit !== null ? savedUnit === 'true' : true;
-        setIsCelsius(unitPreference);
+        setIsCelsius(savedUnit !== null ? savedUnit === 'true' : true);
 
-        // Fetch climate data from the API
         const apiUrl = process.env.NEXT_PUBLIC_CLIMATE_API_URL;
-        if (typeof apiUrl === 'undefined') {
+        if (!apiUrl) {
             setError('API URL is not defined');
             setIsLoading(false);
             return;
@@ -47,13 +38,11 @@ export default function ClimateInfo() {
 
         fetch(apiUrl)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+                if (!response.ok) throw new Error('Error getting climate data from the API');
                 return response.json();
             })
             .then(data => {
-                setClimateData(data as ClimateData);
+                setClimateData(data);
                 setIsLoading(false);
             })
             .catch(error => {
@@ -62,7 +51,6 @@ export default function ClimateInfo() {
             });
     }, []);
 
-    // Function to toggle temperature unit and save preference to localStorage
     const toggleTemperatureUnit = () => {
         const newIsCelsius = !isCelsius;
         setIsCelsius(newIsCelsius);
@@ -70,25 +58,23 @@ export default function ClimateInfo() {
         sendGTMEvent({ event: 'buttonClicked', value: 'toggleTemperatureUnit' });
     };
 
-    // Function to convert temperature
     const convertTemperature = (temperature: number): number => {
-        if (climateData.sensor_info.error)
-            return -1;
-
         return isCelsius ? temperature : (temperature * 9 / 5) + 32;
     };
 
     if (isLoading) return Placeholder('Loading...');
     if (error) return Placeholder(error);
 
-    const displayTemperature = convertTemperature(climateData.climate.temperature);
-
     return (
-        <div className={styles.climateData}>
-            <h3>{climateData.sensor_info.location}</h3>
-            <p>Sensor Status: {climateData.sensor_info.status}</p>
-            <p>Temperature: {displayTemperature.toFixed(1)}°{isCelsius ? 'C' : 'F'}</p>
-            <p>Humidity: {climateData.climate.humidity}%</p>
+        <div>
+            {Object.values(climateData).map(data => (
+                <div key={data.sensor_info.location} className={styles.climateData}>
+                    <h3>{data.sensor_info.location}</h3>
+                    <p>Sensor Status: {data.sensor_info.status}</p>
+                    <p>Temperature: {convertTemperature(data.climate.temperature).toFixed(1)}°{isCelsius ? 'C' : 'F'}</p>
+                    <p>Humidity: {data.climate.humidity}%</p>
+                </div>
+            ))}
             <button onClick={toggleTemperatureUnit} className={styles.conversionButton}>
                 Switch to {isCelsius ? 'Fahrenheit' : 'Celsius'}
             </button>
@@ -97,5 +83,5 @@ export default function ClimateInfo() {
 }
 
 function Placeholder(message: string) {
-    return <div className={styles.climateData}>{message}</div>
+    return <div className={styles.climateData}>{message}</div>;
 }
