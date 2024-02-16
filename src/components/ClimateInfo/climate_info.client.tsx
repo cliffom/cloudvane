@@ -20,6 +20,10 @@ interface ClimateData {
     };
 }
 
+const convertTemperature = (temperature: number, isCelsius: boolean): number => {
+    return isCelsius ? temperature : (temperature * 9 / 5) + 32;
+};
+
 const lastUpdated = (timestamp: EpochTimeStamp) => {
     return formatDistanceToNow(new Date(timestamp * 1000), { addSuffix: true });
 };
@@ -63,10 +67,6 @@ export default function ClimateInfo() {
         sendGTMEvent({ event: 'buttonClicked', value: 'toggleTemperatureUnit' });
     };
 
-    const convertTemperature = (temperature: number): number => {
-        return isCelsius ? temperature : (temperature * 9 / 5) + 32;
-    };
-
     if (isLoading) return Placeholder('Loading...');
     if (error) return Placeholder(error);
 
@@ -77,7 +77,7 @@ export default function ClimateInfo() {
                     <h3>{data.sensor_info.location}</h3>
                     <p>Status: {data.sensor_info.status}</p>
                     <p>Updated: {lastUpdated(data.last_updated)}</p>
-                    <p>Temperature: {convertTemperature(data.climate.temperature).toFixed(1)}°{isCelsius ? 'C' : 'F'}</p>
+                    <p>Temperature: {convertTemperature(data.climate.temperature, isCelsius).toFixed(1)}°{isCelsius ? 'C' : 'F'}</p>
                     <p>Humidity: {data.climate.humidity}%</p>
                 </div>
             ))}
