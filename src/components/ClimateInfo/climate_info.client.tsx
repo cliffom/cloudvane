@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './climate_info.module.css';
 import { sendGTMEvent } from '@next/third-parties/google';
+import { formatDistanceToNow } from 'date-fns';
 
 interface ClimateData {
     [location: string]: {
@@ -15,9 +16,13 @@ interface ClimateData {
             location: string;
             status: string;
         };
+        last_updated: EpochTimeStamp;
     };
 }
 
+const lastUpdated = (timestamp: EpochTimeStamp) => {
+    return formatDistanceToNow(new Date(timestamp * 1000), { addSuffix: true });
+};
 
 export default function ClimateInfo() {
     const [climateData, setClimateData] = useState<ClimateData>({});
@@ -70,7 +75,8 @@ export default function ClimateInfo() {
             {Object.values(climateData).map(data => (
                 <div key={data.sensor_info.location} className={styles.climateData}>
                     <h3>{data.sensor_info.location}</h3>
-                    <p>Sensor Status: {data.sensor_info.status}</p>
+                    <p>Status: {data.sensor_info.status}</p>
+                    <p>Updated: {lastUpdated(data.last_updated)}</p>
                     <p>Temperature: {convertTemperature(data.climate.temperature).toFixed(1)}°{isCelsius ? 'C' : 'F'}</p>
                     <p>Humidity: {data.climate.humidity}%</p>
                 </div>
